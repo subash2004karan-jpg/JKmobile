@@ -1,0 +1,467 @@
+/* ===========================
+   JK Mobiles — Mobile-First Responsive Styles
+   =========================== */
+
+/* ── Mobile-First Base Styles ── */
+@media (max-width: 576px) {
+  /* Typography */
+  .section-title {
+    font-size: 1.5rem !important;
+  }
+
+  .hero-title {
+    font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
+  }
+
+  .hero-tagline {
+    font-size: 1rem !important;
+  }
+
+  /* Hero Section */
+  .hero {
+    min-height: auto !important;
+    padding: 3rem 0 !important;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-buttons .btn-orange-jk,
+  .hero-buttons .btn-outline-jk,
+  .hero-buttons .btn-wa {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-phone-mockup {
+    max-width: 100% !important;
+    padding: 1.5rem !important;
+    margin-top: 2rem;
+  }
+
+  .phone-icon-wrap {
+    width: 70px !important;
+    height: 70px !important;
+    font-size: 2rem !important;
+  }
+
+  .stat-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .stat-num {
+    font-size: 1.3rem !important;
+  }
+
+  /* Feature Cards */
+  .feature-card {
+    padding: 1.5rem !important;
+  }
+
+  .feature-icon {
+    width: 56px !important;
+    height: 56px !important;
+    font-size: 1.5rem !important;
+  }
+
+  /* Course Cards */
+  .course-mini-card {
+    margin-bottom: 1rem;
+  }
+
+  .course-mini-header {
+    padding: 1.2rem !important;
+  }
+
+  .course-mini-body {
+    padding: 1.2rem !important;
+  }
+
+  /* CTA Banner */
+  .cta-banner {
+    padding: 2rem 1.5rem !important;
+    margin: 2rem 0 !important;
+  }
+
+  .cta-banner h2 {
+    font-size: 1.4rem !important;
+  }
+
+  /* Page Hero */
+  .page-hero {
+    padding: 2.5rem 0 !important;
+  }
+
+  .page-hero h1 {
+    font-size: 1.8rem !important;
+  }
+
+  .page-hero p {
+    font-size: 0.95rem !important;
+  }
+
+  /* Course Detail Cards */
+  .course-card {
+    margin-bottom: 1rem;
+  }
+
+  .course-header {
+    padding: 1.5rem 1.2rem 1.2rem !important;
+  }
+
+  .course-emoji {
+    width: 70px !important;
+    height: 70px !important;
+    font-size: 2.2rem !important;
+  }
+
+  .course-body {
+    padding: 1.5rem !important;
+  }
+
+  .course-info-row {
+    padding: 10px 0 !important;
+  }
+
+  /* Booking Form */
+  .booking-section {
+    padding: 2rem 0 !important;
+  }
+
+  .booking-form-wrap {
+    padding: 1.5rem !important;
+  }
+
+  .form-group {
+    margin-bottom: 1rem !important;
+  }
+
+  .side-info {
+    gap: 12px !important;
+  }
+
+  .info-card {
+    padding: 1.2rem !important;
+  }
+
+  /* Contact Page */
+  .contact-section {
+    padding: 2rem 0 !important;
+  }
+
+  .contact-card {
+    padding: 1.5rem !important;
+  }
+
+  .contact-icon {
+    width: 56px !important;
+    height: 56px !important;
+    font-size: 1.5rem !important;
+  }
+
+  .map-wrap iframe {
+    height: 280px !important;
+  }
+
+  /* Certificate Page */
+  .cert-section {
+    padding: 2rem 0 !important;
+  }
+
+  .cert-lookup-card {
+    padding: 1.5rem !important;
+  }
+
+  .cert-lookup-icon {
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 2rem !important;
+  }
+
+  .certificate-card {
+    margin: 1rem auto 0 !important;
+  }
+
+  .cert-header {
+    padding: 1.5rem !important;
+  }
+
+  .cert-header h2 {
+    font-size: 1.3rem !important;
+  }
+
+  .cert-body {
+    padding: 1.5rem !important;
+  }
+
+  .cert-name {
+    font-size: 1.5rem !important;
+  }
+
+  .cert-footer {
+    padding: 1rem 1.2rem !important;
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .cert-seal {
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 0.5rem !important;
+  }
+
+  /* Table Responsive */
+  .jk-card {
+    overflow-x: auto !important;
+  }
+
+  table {
+    font-size: 0.85rem !important;
+  }
+
+  thead th {
+    padding: 0.7rem 0.8rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  tbody td {
+    padding: 0.7rem 0.8rem !important;
+  }
+
+  /* Navbar */
+  .navbar {
+    padding: 0.5rem 0 !important;
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem !important;
+  }
+
+  .brand-icon {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1rem !important;
+  }
+
+  .nav-link {
+    padding: 0.6rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Footer */
+  footer {
+    padding: 2rem 0 1rem !important;
+  }
+
+  .footer-brand {
+    font-size: 1.2rem !important;
+  }
+
+  /* WhatsApp Float */
+  .whatsapp-float {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.5rem !important;
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+
+  /* Popular Ribbon */
+  .popular-ribbon {
+    font-size: 0.7rem !important;
+    padding: 4px 12px 4px 10px !important;
+  }
+
+  /* Comparison Table */
+  .jk-card table {
+    min-width: 500px;
+  }
+}
+
+/* ── Tablet Styles ── */
+@media (min-width: 577px) and (max-width: 991px) {
+  .hero {
+    min-height: auto !important;
+    padding: 4rem 0 !important;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 2.8rem) !important;
+  }
+
+  .hero-phone-mockup {
+    max-width: 280px !important;
+    margin-top: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.9rem !important;
+  }
+
+  .feature-card {
+    padding: 1.8rem !important;
+  }
+
+  .course-card {
+    margin-bottom: 1.5rem;
+  }
+
+  .page-hero h1 {
+    font-size: 2.2rem !important;
+  }
+
+  .booking-form-wrap {
+    padding: 2rem !important;
+  }
+
+  .cert-lookup-card {
+    padding: 2rem !important;
+  }
+
+  .map-wrap iframe {
+    height: 350px !important;
+  }
+}
+
+/* ── Large Screens ── */
+@media (min-width: 992px) {
+  .hero {
+    min-height: 92vh !important;
+  }
+
+  .hero-phone-mockup {
+    max-width: 320px !important;
+  }
+}
+
+/* ── Extra Large Screens ── */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 4vw, 4rem) !important;
+  }
+}
+
+/* ── Touch Device Optimizations ── */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary-jk:hover,
+  .btn-orange-jk:hover,
+  .btn-outline-jk:hover {
+    transform: none !important;
+  }
+
+  .feature-card:hover,
+  .course-card:hover,
+  .course-mini-card:hover,
+  .contact-card:hover,
+  .jk-card:hover {
+    transform: none !important;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.05) !important;
+  }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-in,
+  .delay-1,
+  .delay-2,
+  .delay-3,
+  .delay-4 {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ── Print Styles ── */
+@media print {
+  .navbar,
+  .whatsapp-float,
+  footer,
+  .hero-buttons,
+  .cta-banner,
+  .page-hero {
+    display: none !important;
+  }
+
+  .certificate-card {
+    display: block !important;
+    box-shadow: none !important;
+    border: 2px solid var(--blue) !important;
+  }
+}
+
+/* ── Safe Area for Notched Devices ── */
+@supports (padding: max(0px)) {
+  .navbar {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .whatsapp-float {
+    right: max(28px, env(safe-area-inset-right));
+    bottom: max(28px, env(safe-area-inset-bottom));
+  }
+
+  footer {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* ── Focus Visible for Accessibility ── */
+*:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+}
+
+/* ── Smooth Scrolling ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Selection Color ── */
+::selection {
+  background: var(--orange);
+  color: white;
+}
+
+/* ── Scrollbar Styling ── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--blue-mid);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--blue);
+}

@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — JK Mobiles</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #0A2463;
+      --blue-mid: #1E4FC2;
+      --blue-light: #3A7BD5;
+      --orange: #FF6B00;
+      --orange-light: #FF8C38;
+      --white: #FFFFFF;
+      --gray-50: #F8FAFF;
+      --gray-100: #EEF2FF;
+      --gray-200: #E0E7FF;
+      --gray-600: #6B7280;
+      --gray-800: #1F2937;
+      --sidebar-w: 260px;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 2px 8px rgba(10,36,99,0.08);
+      --shadow-md: 0 8px 30px rgba(10,36,99,0.14);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-800);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--blue);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      z-index: 200;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-brand {
+      padding: 1.5rem 1.5rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .brand-icon-box {
+      width: 40px; height: 40px;
+      background: var(--orange);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 1.2rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      padding: 0.75rem 0.75rem 0.35rem;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.65rem 0.9rem;
+      border-radius: 10px;
+      color: rgba(255,255,255,0.78);
+      font-weight: 600;
+      font-size: 0.93rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .sidebar-link .icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+    .sidebar-link:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .sidebar-link.active {
+      background: rgba(255,255,255,0.16);
+      color: white;
+    }
+
+    .sidebar-link.active .icon { filter: none; }
+
+    .sidebar-link .badge-count {
+      margin-left: auto;
+      background: var(--orange);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 50px;
+    }
+
+    .sidebar-footer {
+      padding: 1rem 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .admin-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      margin-bottom: 0.75rem;
+    }
+
+    .admin-avatar {
+      width: 34px; height: 34px;
+      background: var(--orange);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .admin-name {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.9);
+      font-weight: 700;
+    }
+
+    .admin-role {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ── Main Content ── */
+    .main-content {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top Bar ── */
+    .topbar {
+      background: white;
+      border-bottom: 1px solid var(--gray-200);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .topbar-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .topbar-subtitle {
+      font-size: 0.8rem;
+      color: var(--gray-600);
+      margin-top: 1px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-topbar {
+      padding: 0.5rem 1.2rem;
+      border-radius: var(--radius);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-refresh {
+      background: var(--gray-100);
+      color: var(--blue);
+    }
+
+    .btn-refresh:hover { background: var(--gray-200); }
+
+    .btn-logout {
+      background: #FEF2F2;
+      color: #991B1B;
+      border: 1px solid #FECACA;
+    }
+
+    .btn-logout:hover { background: #FEE2E2; }
+
+    /* ── Page Sections ── */
+    .page-section {
+      padding: 2rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .page-section.active { display: block; }
+
+    @keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+    /* ── Stat Cards ── */
+    .stat-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+    .stat-icon {
+      width: 58px; height: 58px;
+      border-radius: 15px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .stat-value {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* ── Table ── */
+    .jk-table-wrap {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      overflow: hidden;
+    }
+
+    .jk-table-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .jk-table-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .search-input {
+      padding: 0.55rem 1rem;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      color: var(--gray-800);
+      outline: none;
+      width: 220px;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus { border-color: var(--blue-mid); }
+
+    .filter-select {
+      padding: 0.55rem 0.9rem;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      color: var(--gray-800);
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .filter-select:focus { border-color: var(--blue-mid); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    thead th {
+      padding: 0.9rem 1.2rem;
+      background: var(--gray-50);
+      color: var(--blue);
+      font-weight: 700;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--gray-200);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 0.9rem 1.2rem;
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover { background: var(--gray-50); }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-completed { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
+    .badge-pending   { background: #FFF7ED; color: #9A3412; border: 1px solid #FED7AA; }
+    .badge-online    { background: #EEF2FF; color: var(--blue-mid); border: 1px solid var(--gray-200); }
+    .badge-offline   { background: #F5F3FF; color: #5B21B6; border: 1px solid #DDD6FE; }
+    .badge-basic     { background: #EEF2FF; color: var(--blue); border: 1px solid var(--gray-200); }
+    .badge-advanced  { background: #FFF7ED; color: var(--orange); border: 1px solid #FED7AA; }
+    .badge-chip      { background: #1A1A2E; color: #FF8C38; border: 1px solid #FF6B00; }
+
+    .btn-complete {
+      padding: 5px 14px;
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-complete:hover { background: var(--blue-mid); transform: translateY(-1px); }
+    .btn-complete:disabled { background: #9CA3AF; cursor: not-allowed; transform: none; }
+
+    .btn-view-cert {
+      padding: 5px 12px;
+      background: var(--orange);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-view-cert:hover { background: var(--orange-light); color: white; transform: translateY(-1px); }
+
+    /* ── Empty State ── */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--gray-600);
+    }
+
+    .empty-icon { font-size: 3.5rem; margin-bottom: 1rem; opacity: 0.6; }
+
+    /* ── Loader ── */
+    .loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      gap: 8px;
+      color: var(--gray-600);
+      font-size: 0.9rem;
+    }
+
+    .dot-spin {
+      width: 8px; height: 8px;
+      background: var(--blue-mid);
+      border-radius: 50%;
+      animation: dotBounce 1.2s infinite;
+    }
+
+    .dot-spin:nth-child(2) { animation-delay: 0.2s; background: var(--orange); }
+    .dot-spin:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotBounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    /* ── Toast ── */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      padding: 0.9rem 1.3rem;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: 0.88rem;
+      box-shadow: var(--shadow-md);
+      animation: toastIn 0.3s ease forwards;
+      min-width: 260px;
+    }
+
+    @keyframes toastIn {
+      from { opacity:0; transform: translateX(30px); }
+      to   { opacity:1; transform: translateX(0); }
+    }
+
+    .toast.success { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
+    .toast.error   { background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
+    .toast.info    { background: var(--gray-100); color: var(--blue); border: 1px solid var(--gray-200); }
+
+    /* ── Recent bookings mini table ── */
+    .recent-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.2rem;
+      border-bottom: 1px solid var(--gray-100);
+      gap: 12px;
+    }
+
+    .recent-row:last-child { border-bottom: none; }
+
+    .recent-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Charts ── */
+    .mini-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: var(--gray-200);
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .mini-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.8s ease;
+    }
+
+    /* ── Mobile sidebar overlay ── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 190;
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--blue);
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-overlay.open { display: block; }
+      .main-content { margin-left: 0; }
+      .hamburger { display: block; }
+      .page-section { padding: 1.2rem; }
+      .topbar { padding: 0.85rem 1.2rem; }
+      .search-input { width: 160px; }
+    }
+
+    @media (max-width: 576px) {
+      .topbar {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .topbar-title {
+        font-size: 1.2rem;
+      }
+
+      .topbar-subtitle {
+        font-size: 0.75rem;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .btn-topbar {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      .stat-card {
+        padding: 1rem;
+        gap: 0.8rem;
+      }
+
+      .stat-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.4rem;
+      }
+
+      .stat-value {
+        font-size: 1.6rem;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+      }
+
+      .jk-table-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .search-input {
+        width: 100%;
+      }
+
+      .filter-select {
+        width: calc(50% - 4px);
+      }
+
+      thead th {
+        padding: 0.7rem 0.6rem;
+        font-size: 0.7rem;
+      }
+
+      tbody td {
+        padding: 0.7rem 0.6rem;
+        font-size: 0.85rem;
+      }
+
+      .badge-pill {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+      }
+
+      .btn-complete,
+      .btn-view-cert {
+        padding: 4px 10px;
+        font-size: 0.75rem;
+      }
+
+      .recent-row {
+        padding: 0.7rem;
+      }
+
+      .recent-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+      }
+
+      .sidebar-brand {
+        padding: 1.2rem;
+      }
+
+      .brand-text {
+        font-size: 1.1rem;
+      }
+
+      .sidebar-link {
+        padding: 0.55rem 0.75rem;
+        font-size: 0.88rem;
+      }
+
+      .admin-chip {
+        padding: 0.6rem;
+      }
+
+      .admin-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 0.85rem;
+      }
+
+      .admin-name {
+        font-size: 0.75rem;
+      }
+
+      .admin-role {
+        font-size: 0.65rem;
+      }
+
+      .toast {
+        min-width: auto;
+        max-width: calc(100vw - 40px);
+        font-size: 0.85rem;
+        padding: 0.75rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Sidebar Overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- ── Sidebar ── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <a href="../index.html" class="brand-row">
+      <div class="brand-icon-box">📱</div>
+      <div>
+        <div class="brand-text">JK Mobiles</div>
+        <div class="brand-sub">Admin Panel</div>
+      </div>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Overview</div>
+    <button class="sidebar-link active" data-section="dashboard" onclick="switchSection('dashboard', this)">
+      <span class="icon">📊</span> Dashboard
+    </button>
+
+    <div class="nav-section-label">Management</div>
+    <button class="sidebar-link" data-section="students" onclick="switchSection('students', this)">
+      <span class="icon">👥</span> All Students
+      <span class="badge-count" id="sidebarCount">—</span>
+    </button>
+    <button class="sidebar-link" data-section="completed" onclick="switchSection('completed', this)">
+      <span class="icon">✅</span> Completed
+    </button>
+    <button class="sidebar-link" data-section="pending" onclick="switchSection('pending', this)">
+      <span class="icon">⏳</span> Pending
+    </button>
+
+    <div class="nav-section-label">Tools</div>
+    <button class="sidebar-link" onclick="window.open('../certificate.html','_blank')">
+      <span class="icon">🎓</span> Certificate Portal ↗
+    </button>
+    <button class="sidebar-link" onclick="window.open('../booking.html','_blank')">
+      <span class="icon">📝</span> Booking Form ↗
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="admin-chip">
+      <div class="admin-avatar">👤</div>
+      <div>
+        <div class="admin-name" id="adminEmail">Admin</div>
+        <div class="admin-role">Super Admin</div>
+      </div>
+    </div>
+    <button class="sidebar-link" style="color:rgba(255,150,150,0.9);" onclick="doLogout()">
+      <span class="icon">🚪</span> Logout
+    </button>
+  </div>
+</aside>
+
+<!-- ── Main Content ── -->
+<div class="main-content">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <button class="hamburger" onclick="openSidebar()">☰</button>
+      <div>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        <div class="topbar-subtitle" id="topbarSub">Welcome back, Admin</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-topbar btn-refresh" onclick="refreshData()">🔄 Refresh</button>
+      <button class="btn-topbar btn-logout" onclick="doLogout()">🚪 Logout</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- SECTION: Dashboard                  -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="page-section active" id="section-dashboard">
+
+    <!-- Stat Cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:linear-gradient(135deg,#EEF2FF,#C7D2FE);">👥</div>
+          <div>
+            <div class="stat-value" id="statTotal">—</div>
+            <div class="stat-label">Total Students</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:linear-gradient(135deg,#ECFDF5,#A7F3D0);">✅</div>
+          <div>
+            <div class="stat-value" id="statCompleted" style="color:#065F46;">—</div>
+            <div class="stat-label">Completed</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:linear-gradient(135deg,#FFF7ED,#FED7AA);">⏳</div>
+          <div>
+            <div class="stat-value" id="statPending" style="color:var(--orange);">—</div>
+            <div class="stat-label">In Progress</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:linear-gradient(135deg,#F5F3FF,#DDD6FE);">📈</div>
+          <div>
+            <div class="stat-value" id="statRate" style="color:#5B21B6;">—</div>
+            <div class="stat-label">Completion Rate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Recent Enrollments -->
+      <div class="col-lg-7">
+        <div class="jk-table-wrap">
+          <div class="jk-table-header">
+            <div class="jk-table-title">🕐 Recent Enrollments</div>
+            <button class="btn-topbar btn-refresh" style="font-size:0.8rem;" onclick="switchSection('students', document.querySelector('[data-section=students]'))">View All →</button>
+          </div>
+          <div id="recentList">
+            <div class="loader"><div class="dot-spin"></div><div class="dot-spin"></div><div class="dot-spin"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Breakdown -->
+      <div class="col-lg-5">
+        <div class="jk-table-wrap" style="padding:1.5rem;">
+          <div class="jk-table-title mb-3">📚 Course Breakdown</div>
+          <div id="courseBreakdown">
+            <div class="loader"><div class="dot-spin"></div><div class="dot-spin"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- SECTION: All Students               -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="page-section" id="section-students">
+    <div class="jk-table-wrap">
+      <div class="jk-table-header">
+        <div class="jk-table-title">👥 All Students</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search name or phone..." oninput="filterTable()">
+          <select class="filter-select" id="filterCourse" onchange="filterTable()">
+            <option value="">All Courses</option>
+            <option value="Basic">Basic</option>
+            <option value="Advanced">Advanced</option>
+            <option value="Chip Level">Chip Level</option>
+          </select>
+          <select class="filter-select" id="filterMode" onchange="filterTable()">
+            <option value="">All Modes</option>
+            <option value="Online">Online</option>
+            <option value="Offline">Offline</option>
+          </select>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Student</th>
+              <th>Phone</th>
+              <th>Course</th>
+              <th>Mode</th>
+              <th>Enrolled</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody">
+            <tr><td colspan="8"><div class="loader"><div class="dot-spin"></div><div class="dot-spin"></div><div class="dot-spin"></div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:1rem 1.5rem; border-top:1px solid var(--gray-200); font-size:0.85rem; color:var(--gray-600);">
+        Showing <span id="rowCount">—</span> students
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- SECTION: Completed                  -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="page-section" id="section-completed">
+    <div class="jk-table-wrap">
+      <div class="jk-table-header">
+        <div class="jk-table-title">✅ Completed Students</div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Student</th>
+              <th>Phone</th>
+              <th>Course</th>
+              <th>Mode</th>
+              <th>Completed On</th>
+              <th>Certificate</th>
+            </tr>
+          </thead>
+          <tbody id="completedTableBody">
+            <tr><td colspan="7"><div class="loader"><div class="dot-spin"></div><div class="dot-spin"></div><div class="dot-spin"></div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- SECTION: Pending                    -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="page-section" id="section-pending">
+    <div class="jk-table-wrap">
+      <div class="jk-table-header">
+        <div class="jk-table-title">⏳ Pending Students</div>
+        <div style="font-size:0.85rem; color:var(--gray-600);">Mark as completed to enable certificate download.</div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Student</th>
+              <th>Phone</th>
+              <th>Course</th>
+              <th>Mode</th>
+              <th>Enrolled</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="pendingTableBody">
+            <tr><td colspan="7"><div class="loader"><div class="dot-spin"></div><div class="dot-spin"></div><div class="dot-spin"></div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main-content -->
+
+<script>
+  // const API_BASE = 'https://jk-mobiles-api.onrender.com'; // ← update after deploy
+  // API Base URL - Automatically switches between local and production
+  const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? 'http://localhost:5000' 
+    : 'https://jk-mobiles-api.onrender.com';
+  const TOKEN = localStorage.getItem('jk_admin_token') || 'demo_token';
+  let allStudents = [];
+
+  // ── Mock Data for Demo ──
+  const getMockStudents = () => {
+    // Get students from localStorage (saved from booking form)
+    const savedStudents = JSON.parse(localStorage.getItem('jk_students') || '[]');
+    
+    // Default mock students
+    const defaultStudents = [
+      { _id: '1', name: 'Jeevan', phone: '7639730715', course: 'Basic', mode: 'Offline', enrolledAt: new Date().toISOString(), completed: false },
+      { _id: '2', name: 'Subash', phone: '6385595019', course: 'Advanced', mode: 'Online', enrolledAt: new Date(Date.now() - 43200000).toISOString(), completed: true, completedAt: new Date().toISOString() },
+      { _id: '3', name: 'Rahul Kumar', phone: '9876543210', course: 'Advanced', mode: 'Online', enrolledAt: new Date(Date.now() - 86400000).toISOString(), completed: true, completedAt: new Date().toISOString() },
+      { _id: '4', name: 'Priya Sharma', phone: '8765432109', course: 'Chip Level', mode: 'Offline', enrolledAt: new Date(Date.now() - 172800000).toISOString(), completed: false },
+      { _id: '5', name: 'Amit Patel', phone: '7654321098', course: 'Basic', mode: 'Online', enrolledAt: new Date(Date.now() - 259200000).toISOString(), completed: true, completedAt: new Date(Date.now() - 86400000).toISOString() },
+      { _id: '6', name: 'Sneha Gupta', phone: '6543210987', course: 'Advanced', mode: 'Offline', enrolledAt: new Date(Date.now() - 345600000).toISOString(), completed: false }
+    ];
+    
+    // Combine default and saved students
+    return [...defaultStudents, ...savedStudents];
+  };
+
+  const isDemoMode = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+  // ── Auth Guard ──
+  if (!TOKEN && !isDemoMode) window.location.href = 'login.html';
+
+  // ── Toast ──
+  function showToast(msg, type = 'info') {
+    const tc = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.textContent = msg;
+    tc.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+  }
+
+  // ── API Helper ──
+  async function api(endpoint, method = 'GET', body = null) {
+    // Demo mode - return mock data
+    if (isDemoMode) {
+      await new Promise(r => setTimeout(r, 300)); // Simulate network delay
+      
+      const students = getMockStudents();
+      
+      if (endpoint === '/students/stats/overview') {
+        const total = students.length;
+        const completed = students.filter(s => s.completed).length;
+        const pending = total - completed;
+        return { ok: true, data: { stats: { total, completed, pending }, recent: students.slice(0, 5) } };
+      }
+      
+      if (endpoint === '/students') {
+        return { ok: true, data: { students: students } };
+      }
+      
+      if (endpoint.startsWith('/students/complete/')) {
+        const id = endpoint.split('/').pop();
+        // Try to find in localStorage first
+        const savedStudents = JSON.parse(localStorage.getItem('jk_students') || '[]');
+        const student = savedStudents.find(s => s._id === id);
+        if (student) {
+          student.completed = true;
+          student.completedAt = new Date().toISOString();
+          localStorage.setItem('jk_students', JSON.stringify(savedStudents));
+        }
+        return { ok: true, data: { message: 'Student marked as completed' } };
+      }
+      
+      return { ok: false, data: { message: 'Endpoint not implemented in demo' } };
+    }
+    
+    // Real API call
+    const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${TOKEN}` };
+    const config = { method, headers };
+    if (body) config.body = JSON.stringify(body);
+    const res = await fetch(`${API_BASE}${endpoint}`, config);
+    if (res.status === 401) {
+      localStorage.removeItem('jk_admin_token');
+      window.location.href = 'login.html';
+    }
+    return { ok: res.ok, data: await res.json() };
+  }
+
+  // ── Sidebar navigation ──
+  function switchSection(name, btn) {
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    document.getElementById(`section-${name}`).classList.add('active');
+    if (btn) btn.classList.add('active');
+
+    const titles = { dashboard:'Dashboard', students:'All Students', completed:'Completed Students', pending:'Pending Students' };
+    document.getElementById('topbarTitle').textContent = titles[name] || name;
+    document.getElementById('topbarSub').textContent = new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+    closeSidebar();
+    if (name === 'completed') renderCompleted();
+    if (name === 'pending') renderPending();
+  }
+
+  function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+
+  // ── Logout ──
+  function doLogout() {
+    localStorage.removeItem('jk_admin_token');
+    localStorage.removeItem('jk_admin_email');
+    window.location.href = 'login.html';
+  }
+
+  // ── Refresh ──
+  function refreshData() {
+    showToast('🔄 Refreshing data...', 'info');
+    loadAll();
+  }
+
+  // ── Format date ──
+  function fmtDate(dt) {
+    if (!dt) return '—';
+    return new Date(dt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+  }
+
+  // ── Course badge ──
+  function courseBadge(c) {
+    const cls = c === 'Basic' ? 'badge-basic' : c === 'Advanced' ? 'badge-advanced' : 'badge-chip';
+    return `<span class="badge-pill ${cls}">${c}</span>`;
+  }
+
+  // ── Mode badge ──
+  function modeBadge(m) {
+    return `<span class="badge-pill ${m === 'Online' ? 'badge-online' : 'badge-offline'}">${m}</span>`;
+  }
+
+  // ── Load everything ──
+  async function loadAll() {
+    await Promise.all([loadStats(), loadStudents()]);
+  }
+
+  // ── Load stats ──
+  async function loadStats() {
+    const { ok, data } = await api('/students/stats/overview');
+    if (!ok) return;
+    const { total, completed, pending } = data.stats;
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statCompleted').textContent = completed;
+    document.getElementById('statPending').textContent = pending;
+    const rate = total > 0 ? Math.round((completed / total) * 100) : 0;
+    document.getElementById('statRate').textContent = rate + '%';
+    document.getElementById('sidebarCount').textContent = total;
+
+    // Recent list
+    const rl = document.getElementById('recentList');
+    if (!data.recent || data.recent.length === 0) {
+      rl.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>No enrollments yet.</p></div>`;
+      return;
+    }
+    rl.innerHTML = data.recent.map(s => `
+      <div class="recent-row">
+        <div class="recent-avatar">${s.name.charAt(0).toUpperCase()}</div>
+        <div style="flex:1; min-width:0;">
+          <div style="font-weight:700; font-size:0.92rem; color:var(--gray-800); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</div>
+          <div style="font-size:0.78rem; color:var(--gray-600);">${s.phone} · ${s.course}</div>
+        </div>
+        <div style="text-align:right; flex-shrink:0;">
+          <div>${s.completed ? '<span class="badge-pill badge-completed">✅ Done</span>' : '<span class="badge-pill badge-pending">⏳ Active</span>'}</div>
+          <div style="font-size:0.75rem; color:var(--gray-600); margin-top:3px;">${fmtDate(s.enrolledAt)}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ── Load all students ──
+  async function loadStudents() {
+    const { ok, data } = await api('/students');
+    if (!ok) { showToast('Failed to load students', 'error'); return; }
+    allStudents = data.students || [];
+    renderStudentsTable(allStudents);
+    renderCourseBreakdown(allStudents);
+    renderCompleted();
+    renderPending();
+    document.getElementById('adminEmail').textContent = localStorage.getItem('jk_admin_email') || 'Admin';
+  }
+
+  // ── Render main students table ──
+  function renderStudentsTable(list) {
+    const tbody = document.getElementById('studentsTableBody');
+    document.getElementById('rowCount').textContent = list.length;
+
+    if (list.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📭</div><p>No students found.</p></div></td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = list.map((s, i) => `
+      <tr>
+        <td style="color:var(--gray-600); font-size:0.82rem;">${i + 1}</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--blue),var(--blue-mid)); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.9rem; flex-shrink:0;">${s.name.charAt(0).toUpperCase()}</div>
+            <span style="font-weight:700;">${s.name}</span>
+          </div>
+        </td>
+        <td><a href="tel:${s.phone}" style="color:var(--blue-mid); text-decoration:none; font-weight:600;">${s.phone}</a></td>
+        <td>${courseBadge(s.course)}</td>
+        <td>${modeBadge(s.mode)}</td>
+        <td style="color:var(--gray-600); font-size:0.85rem;">${fmtDate(s.enrolledAt)}</td>
+        <td>${s.completed ? '<span class="badge-pill badge-completed">✅ Completed</span>' : '<span class="badge-pill badge-pending">⏳ In Progress</span>'}</td>
+        <td>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+            ${!s.completed ? `<button class="btn-complete" onclick="markComplete('${s._id}', this)">✅ Mark Done</button>` : `
+              <div style="display:flex; flex-direction:column; gap:4px;">
+                <span style="font-size:0.75rem; color:#065F46; font-weight:600;">🎓 Certified</span>
+                ${s.certificateId ? `<span class="badge-pill badge-basic" style="font-size:0.7rem;">${s.certificateId}</span>` : ''}
+                <button class="btn-view-cert" onclick="editCertId('${s._id}', '${s.certificateId || ''}')">✏️ Edit ID</button>
+              </div>
+            `}
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // ── Render completed table ──
+  function renderCompleted() {
+    const list = allStudents.filter(s => s.completed);
+    const tbody = document.getElementById('completedTableBody');
+
+    if (list.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🎓</div><p>No completed students yet.</p></div></td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = list.map((s, i) => `
+      <tr>
+        <td style="color:var(--gray-600); font-size:0.82rem;">${i + 1}</td>
+        <td style="font-weight:700;">${s.name}</td>
+        <td><a href="tel:${s.phone}" style="color:var(--blue-mid); text-decoration:none; font-weight:600;">${s.phone}</a></td>
+        <td>${courseBadge(s.course)}</td>
+        <td>${modeBadge(s.mode)}</td>
+        <td style="color:var(--gray-600); font-size:0.85rem;">${fmtDate(s.completedAt)}</td>
+        <td><a class="btn-view-cert" href="../certificate.html" target="_blank">🎓 View Cert</a></td>
+      </tr>
+    `).join('');
+  }
+
+  // ── Render pending table ──
+  function renderPending() {
+    const list = allStudents.filter(s => !s.completed);
+    const tbody = document.getElementById('pendingTableBody');
+
+    if (list.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🎉</div><p>All students have completed their courses!</p></div></td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = list.map((s, i) => `
+      <tr>
+        <td style="color:var(--gray-600); font-size:0.82rem;">${i + 1}</td>
+        <td style="font-weight:700;">${s.name}</td>
+        <td><a href="tel:${s.phone}" style="color:var(--blue-mid); text-decoration:none; font-weight:600;">${s.phone}</a></td>
+        <td>${courseBadge(s.course)}</td>
+        <td>${modeBadge(s.mode)}</td>
+        <td style="color:var(--gray-600); font-size:0.85rem;">${fmtDate(s.enrolledAt)}</td>
+        <td><button class="btn-complete" onclick="markComplete('${s._id}', this)">✅ Mark as Completed</button></td>
+      </tr>
+    `).join('');
+  }
+
+  // ── Course breakdown chart (text bars) ──
+  function renderCourseBreakdown(students) {
+    const counts = { Basic: 0, Advanced: 0, 'Chip Level': 0 };
+    students.forEach(s => { if (counts[s.course] !== undefined) counts[s.course]++; });
+    const total = students.length || 1;
+    const colors = { Basic: 'var(--blue-mid)', Advanced: 'var(--orange)', 'Chip Level': '#5B21B6' };
+
+    const cb = document.getElementById('courseBreakdown');
+    cb.innerHTML = Object.entries(counts).map(([course, count]) => `
+      <div style="margin-bottom:1.2rem;">
+        <div style="display:flex; justify-content:space-between; font-size:0.88rem; margin-bottom:5px;">
+          <span style="font-weight:700; color:var(--gray-800);">${course}</span>
+          <span style="color:var(--gray-600);">${count} student${count !== 1 ? 's' : ''}</span>
+        </div>
+        <div class="mini-bar">
+          <div class="mini-bar-fill" style="width:${Math.round((count/total)*100)}%; background:${colors[course]};"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ── Search & filter ──
+  function filterTable() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    const course = document.getElementById('filterCourse').value;
+    const mode = document.getElementById('filterMode').value;
+
+    const filtered = allStudents.filter(s => {
+      const matchQ = !q || s.name.toLowerCase().includes(q) || s.phone.includes(q);
+      const matchC = !course || s.course === course;
+      const matchM = !mode || s.mode === mode;
+      return matchQ && matchC && matchM;
+    });
+
+    renderStudentsTable(filtered);
+  }
+
+  // ── Mark complete ──
+  async function markComplete(id, btn) {
+    if (!confirm('Mark this student as completed? This will enable their certificate download.')) return;
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Saving...';
+
+    const { ok, data } = await api(`/students/complete/${id}`, 'PUT');
+    if (ok) {
+      showToast('✅ Student marked as completed! Certificate ID: ' + (data.student?.certificateId || 'Generated'), 'success');
+      await loadStudents();
+    } else {
+      showToast('❌ ' + (data.message || 'Failed to update.'), 'error');
+      btn.disabled = false;
+      btn.textContent = '✅ Mark Done';
+    }
+  }
+
+  // ── Edit Certificate ID ──
+  async function editCertId(id, currentId) {
+    const newId = prompt('Enter new Certificate ID (Format: JKM-YYYY-XXX):', currentId);
+    if (newId === null) return; // Cancelled
+    if (newId === currentId) return; // No change
+    
+    if (!newId.match(/^JKM-\d{4}-\d{3}$/)) {
+      showToast('❌ Invalid format. Use: JKM-YYYY-XXX (e.g., JKM-2026-001)', 'error');
+      return;
+    }
+
+    const { ok, data } = await api(`/students/update-cert/${id}`, 'PUT', { certificateId: newId });
+    if (ok) {
+      showToast('✅ Certificate ID updated!', 'success');
+      await loadStudents();
+    } else {
+      showToast('❌ ' + (data.message || 'Failed to update.'), 'error');
+    }
+  }
+
+  // ── Init ──
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('topbarSub').textContent = new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    loadAll();
+  });
+</script>
+</body>
+</html>

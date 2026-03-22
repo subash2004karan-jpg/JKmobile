@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses — JK Mobiles</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, var(--blue) 0%, #0D3080 100%);
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    @media (max-width: 576px) {
+      .page-hero {
+        padding: 2.5rem 0;
+      }
+
+      .page-hero h1 {
+        font-size: 1.6rem !important;
+      }
+
+      .page-hero p {
+        font-size: 0.9rem !important;
+      }
+
+      .course-header {
+        padding: 1.5rem 1rem 1.2rem !important;
+      }
+
+      .course-emoji {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 2.2rem !important;
+      }
+
+      .course-body {
+        padding: 1.2rem !important;
+      }
+
+      .popular-ribbon {
+        font-size: 0.7rem !important;
+        padding: 4px 12px 4px 10px !important;
+      }
+
+      .jk-card {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 500px;
+      }
+    }
+
+    .course-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      transition: var(--transition);
+      height: 100%;
+    }
+
+    .course-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .course-header {
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .course-emoji {
+      width: 90px;
+      height: 90px;
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin: 0 auto 1.2rem;
+    }
+
+    .course-body { padding: 2rem; }
+
+    .course-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .course-info-row:last-child { border-bottom: none; }
+
+    .course-info-label {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .course-info-value {
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+
+    .curriculum-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .curriculum-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+
+    .curriculum-list li::before {
+      content: '✓';
+      width: 20px;
+      height: 20px;
+      background: var(--gray-100);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--blue-mid);
+      flex-shrink: 0;
+    }
+
+    .popular-ribbon {
+      position: absolute;
+      top: 16px;
+      right: -8px;
+      background: var(--orange);
+      color: white;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      padding: 5px 16px 5px 12px;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .popular-ribbon::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: -8px;
+      border-width: 8px 8px 0 0;
+      border-style: solid;
+      border-color: #cc5500 transparent transparent transparent;
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- Page Hero -->
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label" style="background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.9); border-color:rgba(255,255,255,0.2);">Our Courses</div>
+    <h1 style="color:white; font-size:2.8rem; margin-bottom:0.75rem;">Choose Your <span style="color:var(--orange);">Learning Path</span></h1>
+    <p style="color:rgba(255,255,255,0.8); font-size:1.05rem;">All courses — 10 Days • ₹15,000 • Online & Offline</p>
+  </div>
+</section>
+
+<!-- Courses -->
+<section style="padding: 5rem 0;">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Basic Course -->
+      <div class="col-lg-4">
+        <div class="course-card animate-in delay-1">
+          <div class="course-header" style="background: linear-gradient(135deg, #0A2463, #1E4FC2);">
+            <div class="course-emoji" style="background:rgba(255,255,255,0.15);">🔧</div>
+            <h3 style="color:white; font-size:1.8rem;">Basic Course</h3>
+            <p style="color:rgba(255,255,255,0.75); font-size:0.9rem; margin:0;">Perfect for Beginners</p>
+          </div>
+          <div class="course-body">
+            <div class="course-info-row">
+              <span class="course-info-label">⏱ Duration</span>
+              <span class="course-info-value" style="color:var(--blue);">10 Days</span>
+            </div>
+            <div class="course-info-row">
+              <span class="course-info-label">💰 Course Fee</span>
+              <span class="course-info-value" style="color:var(--orange); font-size:1.2rem;">₹15,000</span>
+            </div>
+            <div class="course-info-row">
+              <span class="course-info-label">🖥 Mode</span>
+              <span class="badge-orange">Online / Offline</span>
+            </div>
+
+            <h6 style="font-family:'Rajdhani',sans-serif; color:var(--blue); font-size:1rem; letter-spacing:0.08em; margin:1.5rem 0 1rem; text-transform:uppercase;">What You'll Learn</h6>
+            <ul class="curriculum-list">
+              <li>Introduction to Mobile Hardware</li>
+              <li>Identifying Mobile Components</li>
+              <li>Screen & Battery Replacement</li>
+              <li>Charging Port Repair</li>
+              <li>Speaker & Mic Replacement</li>
+              <li>Software Flashing Basics</li>
+              <li>Common Fault Diagnosis</li>
+            </ul>
+
+            <a href="booking.html?course=Basic" class="btn-primary-jk mt-4 btn-icon-anim" style="width:100%; justify-content:center;">📝 <span class="btn-icon">Enroll in Basic →</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Advanced Course -->
+      <div class="col-lg-4">
+        <div class="course-card animate-in delay-2" style="border-color: var(--orange); box-shadow: 0 8px 40px rgba(255,107,0,0.2);">
+          <div class="course-header" style="background: linear-gradient(135deg, var(--orange), #E85D00);">
+            <div class="popular-ribbon">⭐ POPULAR</div>
+            <div class="course-emoji" style="background:rgba(255,255,255,0.2);">⚙️</div>
+            <h3 style="color:white; font-size:1.8rem;">Advanced Course</h3>
+            <p style="color:rgba(255,255,255,0.85); font-size:0.9rem; margin:0;">Intermediate to Advanced Level</p>
+          </div>
+          <div class="course-body">
+            <div class="course-info-row">
+              <span class="course-info-label">⏱ Duration</span>
+              <span class="course-info-value" style="color:var(--blue);">10 Days</span>
+            </div>
+            <div class="course-info-row">
+              <span class="course-info-label">💰 Course Fee</span>
+              <span class="course-info-value" style="color:var(--orange); font-size:1.2rem;">₹15,000</span>
+            </div>
+            <div class="course-info-row">
+              <span class="course-info-label">🖥 Mode</span>
+              <span class="badge-orange">Online / Offline</span>
+            </div>
+
+            <h6 style="font-family:'Rajdhani',sans-serif; color:var(--blue); font-size:1rem; letter-spacing:0.08em; margin:1.5rem 0 1rem; text-transform:uppercase;">What You'll Learn</h6>
+            <ul class="curriculum-list">
+              <li>Everything in Basic Course</li>
+              <li>Motherboard-Level Diagnosis</li>
+              <li>IC Replacement & Soldering</li>
+              <li>Water Damage Repair</li>
+              <li>Camera & Sensor Faults</li>
+              <li>Network & Signal Issues</li>
+              <li>Advanced Software Tools</li>
+            </ul>
+
+            <a href="booking.html?course=Advanced" class="btn-orange-jk mt-4 btn-glow" style="width:100%; justify-content:center;">📝 Enroll in Advanced</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chip Level Course -->
+      <div class="col-lg-4">
+        <div class="course-card animate-in delay-3">
+          <div class="course-header" style="background: linear-gradient(135deg, #1A1A2E, #16213E);">
+            <div class="course-emoji" style="background:rgba(255,107,0,0.25);">🔬</div>
+            <h3 style="color:white; font-size:1.8rem;">Chip Level</h3>
+            <p style="color:rgba(255,255,255,0.7); font-size:0.9rem; margin:0;">Expert / Professional Level</p>
+          </div>
+          <div class="course-body">
+            <div class="course-info-row">
+              <span class="course-info-label">⏱ Duration</span>
+              <span class="course-info-value" style="color:var(--blue);">10 Days</span>
+            </div>
+            <div class="course-info-row">
+              <span class="course-info-label">💰 Course Fee</span>
+              <span class="course-info-value" style="color:var(--orange); font-size:1.2rem;">₹15,000</span>
+            </div>
+            <div class="course-info-row">
+              <span class="course-info-label">🖥 Mode</span>
+              <span class="badge-orange">Online / Offline</span>
+            </div>
+
+            <h6 style="font-family:'Rajdhani',sans-serif; color:var(--blue); font-size:1rem; letter-spacing:0.08em; margin:1.5rem 0 1rem; text-transform:uppercase;">What You'll Learn</h6>
+            <ul class="curriculum-list">
+              <li>PCB Circuit Analysis</li>
+              <li>BGA Chip Rework & Reballing</li>
+              <li>EMMC / NAND Flash Repair</li>
+              <li>Power IC & CPU Faults</li>
+              <li>Using Oscilloscope & DC Power</li>
+              <li>Schematic Reading (iPhone/Android)</li>
+              <li>Professional Lab Setup Tips</li>
+            </ul>
+
+            <a href="booking.html?course=Chip Level" class="btn-primary-jk mt-4 btn-icon-anim" style="background: linear-gradient(135deg,#1A1A2E,#2A2A4E); width:100%; justify-content:center;">📝 <span class="btn-icon">Enroll in Chip Level →</span></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Comparison Table -->
+<section style="padding: 0 0 5rem;">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="section-title">Course <span>Comparison</span></h2>
+    </div>
+    <div class="jk-card" style="overflow:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:0.92rem;">
+        <thead>
+          <tr style="background:var(--blue); color:white;">
+            <th style="padding:16px 20px; text-align:left; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em;">Feature</th>
+            <th style="padding:16px 20px; text-align:center;">Basic</th>
+            <th style="padding:16px 20px; text-align:center; background:var(--orange);">Advanced ⭐</th>
+            <th style="padding:16px 20px; text-align:center;">Chip Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--gray-100);">
+            <td style="padding:14px 20px; font-weight:600; color:var(--gray-600);">Duration</td>
+            <td style="padding:14px 20px; text-align:center; font-weight:700;">10 Days</td>
+            <td style="padding:14px 20px; text-align:center; font-weight:700; background:#FFF7ED;">10 Days</td>
+            <td style="padding:14px 20px; text-align:center; font-weight:700;">10 Days</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);">
+            <td style="padding:14px 20px; font-weight:600; color:var(--gray-600);">Fee</td>
+            <td style="padding:14px 20px; text-align:center; font-weight:700; color:var(--orange);">₹15,000</td>
+            <td style="padding:14px 20px; text-align:center; font-weight:700; color:var(--orange); background:#FFF7ED;">₹15,000</td>
+            <td style="padding:14px 20px; text-align:center; font-weight:700; color:var(--orange);">₹15,000</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);">
+            <td style="padding:14px 20px; font-weight:600; color:var(--gray-600);">Hardware Repair</td>
+            <td style="padding:14px 20px; text-align:center;">✅ Basic</td>
+            <td style="padding:14px 20px; text-align:center; background:#FFF7ED;">✅ Advanced</td>
+            <td style="padding:14px 20px; text-align:center;">✅ Expert</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);">
+            <td style="padding:14px 20px; font-weight:600; color:var(--gray-600);">Soldering & IC Work</td>
+            <td style="padding:14px 20px; text-align:center;">❌</td>
+            <td style="padding:14px 20px; text-align:center; background:#FFF7ED;">✅</td>
+            <td style="padding:14px 20px; text-align:center;">✅ BGA Level</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);">
+            <td style="padding:14px 20px; font-weight:600; color:var(--gray-600);">Chip-Level Repair</td>
+            <td style="padding:14px 20px; text-align:center;">❌</td>
+            <td style="padding:14px 20px; text-align:center; background:#FFF7ED;">❌</td>
+            <td style="padding:14px 20px; text-align:center;">✅</td>
+          </tr>
+          <tr>
+            <td style="padding:14px 20px; font-weight:600; color:var(--gray-600);">Certificate</td>
+            <td style="padding:14px 20px; text-align:center;">✅</td>
+            <td style="padding:14px 20px; text-align:center; background:#FFF7ED;">✅</td>
+            <td style="padding:14px 20px; text-align:center;">✅</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/layout.js"></script>
+<script>
+  // Pre-select course from URL param
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const course = params.get('course');
+    if (course) {
+      const links = document.querySelectorAll(`a[href*="booking.html?course=${course}"]`);
+      links.forEach(l => l.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    }
+  });
+</script>
+</body>
+</html>

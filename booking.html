@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Course — JK Mobiles</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, var(--blue) 0%, #0D3080 100%);
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    @media (max-width: 576px) {
+      .page-hero {
+        padding: 2.5rem 0;
+      }
+
+      .page-hero h1 {
+        font-size: 1.6rem !important;
+      }
+
+      .page-hero p {
+        font-size: 0.9rem !important;
+      }
+
+      .booking-section {
+        padding: 2rem 0 !important;
+      }
+
+      .booking-form-wrap {
+        padding: 1.5rem !important;
+      }
+
+      .booking-form-wrap h3 {
+        font-size: 1.3rem !important;
+      }
+
+      .side-info {
+        margin-top: 1.5rem;
+      }
+
+      .info-card {
+        padding: 1.2rem !important;
+      }
+
+      .info-card-icon {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.3rem !important;
+      }
+
+      .success-screen {
+        padding: 2rem 1rem !important;
+      }
+
+      .success-icon {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 2rem !important;
+      }
+
+      .success-screen h2 {
+        font-size: 1.4rem !important;
+      }
+    }
+
+    .booking-section { padding: 5rem 0; }
+
+    .booking-form-wrap {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+    }
+
+    .form-group { margin-bottom: 1.4rem; }
+
+    select.jk-form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%236B7280' d='M8 10.5L3 5.5h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      cursor: pointer;
+    }
+
+    .side-info { display: flex; flex-direction: column; gap: 20px; }
+
+    .info-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+    }
+
+    .info-card-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gray-100);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      justify-content: center;
+      position: relative;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .success-icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #ECFDF5, #A7F3D0);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin: 0 auto 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label" style="background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.9); border-color:rgba(255,255,255,0.2);">Enrollment</div>
+    <h1 style="color:white; font-size:2.8rem; margin-bottom:0.75rem;">Book Your <span style="color:var(--orange);">Course</span></h1>
+    <p style="color:rgba(255,255,255,0.8); font-size:1.05rem;">Fill in the form below and we'll confirm your seat.</p>
+  </div>
+</section>
+
+<section class="booking-section">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <!-- Form -->
+      <div class="col-lg-7">
+        <div class="booking-form-wrap">
+          <!-- Success Screen -->
+          <div class="success-screen" id="successScreen">
+            <div class="success-icon">✅</div>
+            <h2 style="color:var(--blue); font-size:2rem; margin-bottom:0.75rem;">Enrollment Successful!</h2>
+            <p style="color:var(--gray-600); margin-bottom:1.5rem;">Thank you for enrolling at JK Mobiles. Our team will contact you shortly to confirm your seat.</p>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+              <a href="index.html" class="btn-primary-jk">🏠 Go Home</a>
+              <a href="https://wa.me/917639730715" class="btn-orange-jk" target="_blank">💬 WhatsApp Us</a>
+            </div>
+          </div>
+
+          <!-- The Form -->
+          <div id="formSection">
+            <h3 style="font-size:1.6rem; color:var(--blue); margin-bottom:0.5rem;">Enrollment Form</h3>
+            <p style="color:var(--gray-600); font-size:0.9rem; margin-bottom:2rem;">All fields are required. Your data is safe with us.</p>
+
+            <div id="formAlert" class="jk-alert"></div>
+
+            <div class="form-group">
+              <label class="jk-label">👤 Full Name</label>
+              <input type="text" id="name" class="jk-form-control" placeholder="Enter your full name" maxlength="80">
+            </div>
+
+            <div class="form-group">
+              <label class="jk-label">📞 Phone Number</label>
+              <input type="tel" id="phone" class="jk-form-control" placeholder="10-digit mobile number" maxlength="10">
+            </div>
+
+            <div class="form-group">
+              <label class="jk-label">📚 Select Course</label>
+              <select id="course" class="jk-form-control">
+                <option value="">-- Choose a Course --</option>
+                <option value="Basic">Basic Course</option>
+                <option value="Advanced">Advanced Course ⭐ Popular</option>
+                <option value="Chip Level">Chip Level Course</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="jk-label">🖥 Learning Mode</label>
+              <select id="mode" class="jk-form-control">
+                <option value="">-- Choose Mode --</option>
+                <option value="Online">Online</option>
+                <option value="Offline">Offline (In-Person)</option>
+              </select>
+            </div>
+
+            <button class="btn-orange-jk submit-btn btn-glow" id="submitBtn" onclick="submitBooking()">
+              <span id="btnText">📝 Submit Enrollment</span>
+              <div class="spinner" id="btnSpinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side Info -->
+      <div class="col-lg-5 side-info">
+        <div class="info-card">
+          <div class="info-card-icon">📅</div>
+          <h5 style="color:var(--blue); font-size:1.1rem; margin-bottom:0.5rem;">Quick Admission</h5>
+          <p style="color:var(--gray-600); font-size:0.9rem; margin:0;">Submit your form and receive confirmation within 24 hours via call or WhatsApp.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon">💰</div>
+          <h5 style="color:var(--blue); font-size:1.1rem; margin-bottom:0.5rem;">Fee: ₹15,000</h5>
+          <p style="color:var(--gray-600); font-size:0.9rem; margin:0;">Pay after confirmation. We accept cash, UPI, and bank transfer.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon">⏱</div>
+          <h5 style="color:var(--blue); font-size:1.1rem; margin-bottom:0.5rem;">10-Day Intensive</h5>
+          <p style="color:var(--gray-600); font-size:0.9rem; margin:0;">Weekday batches available. Timings will be confirmed at enrollment.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon">🎓</div>
+          <h5 style="color:var(--blue); font-size:1.1rem; margin-bottom:0.5rem;">Certificate Included</h5>
+          <p style="color:var(--gray-600); font-size:0.9rem; margin:0;">Receive a digital certificate on successful course completion.</p>
+        </div>
+
+        <div style="background: linear-gradient(135deg, var(--orange), var(--orange-light)); border-radius: var(--radius-lg); padding: 1.5rem; text-align:center;">
+          <p style="color:rgba(255,255,255,0.9); font-size:0.9rem; margin-bottom:0.75rem;">Questions? Call us directly!</p>
+          <a href="tel:7639730715" style="color:white; font-family:'Rajdhani',sans-serif; font-size:1.3rem; font-weight:700; text-decoration:none; display:block;">📞 7639730715</a>
+          <a href="tel:6385595019" style="color:rgba(255,255,255,0.85); font-family:'Rajdhani',sans-serif; font-size:1.1rem; font-weight:700; text-decoration:none; display:block; margin-top:4px;">📞 6385595019</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/layout.js"></script>
+<script>
+  // Pre-select course from URL param
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const course = params.get('course');
+    if (course) {
+      const sel = document.getElementById('course');
+      if (sel) sel.value = course;
+    }
+  });
+
+  function showAlert(message, type) {
+    const el = document.getElementById('formAlert');
+    el.className = `jk-alert ${type}`;
+    el.textContent = message;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    setTimeout(() => { el.style.display = 'none'; }, 5000);
+  }
+
+  const isDemoMode = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+  async function submitBooking() {
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const course = document.getElementById('course').value;
+    const mode = document.getElementById('mode').value;
+
+    if (!name || !phone || !course || !mode) {
+      showAlert('⚠️ Please fill in all fields.', 'error'); return;
+    }
+    if (!/^\d{10}$/.test(phone)) {
+      showAlert('⚠️ Please enter a valid 10-digit phone number.', 'error'); return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('btnSpinner');
+
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    spinner.style.display = 'block';
+
+    // Demo mode - simulate success and save to localStorage
+    if (isDemoMode) {
+      await new Promise(r => setTimeout(r, 1500)); // Simulate network delay
+      
+      // Save student data to localStorage for admin dashboard
+      const students = JSON.parse(localStorage.getItem('jk_students') || '[]');
+      const newStudent = {
+        _id: 'student_' + Date.now(),
+        name: name,
+        phone: phone,
+        course: course,
+        mode: mode,
+        enrolledAt: new Date().toISOString(),
+        completed: false
+      };
+      students.push(newStudent);
+      localStorage.setItem('jk_students', JSON.stringify(students));
+      
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+      btn.disabled = false;
+      btnText.style.display = 'inline';
+      spinner.style.display = 'none';
+      return;
+    }
+
+    try {
+      const result = await apiRequest('/students/add', 'POST', { name, phone, course, mode });
+      if (result.ok) {
+        document.getElementById('formSection').style.display = 'none';
+        document.getElementById('successScreen').style.display = 'block';
+      } else {
+        showAlert('❌ ' + (result.data.message || 'Enrollment failed. Please try again.'), 'error');
+      }
+    } catch (err) {
+      showAlert('❌ Network error. Please check your connection and try again.', 'error');
+    } finally {
+      btn.disabled = false;
+      btnText.style.display = 'inline';
+      spinner.style.display = 'none';
+    }
+  }
+</script>
+</body>
+</html>

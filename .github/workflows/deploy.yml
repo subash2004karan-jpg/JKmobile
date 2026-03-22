@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Copy frontend to root for deployment
+        run: |
+          mkdir -p _site
+          cp -r jk-mobiles/frontend/* _site/
+          # Update API URL for GitHub Pages
+          sed -i 's|http://localhost:5000|https://jk-mobiles-api.onrender.com|g' _site/js/config.js
+          sed -i 's|window.location.hostname === .localhost. || window.location.hostname === .127.0.0.1.|false|g' _site/js/config.js
+          sed -i 's|window.location.hostname === .localhost. || window.location.hostname === .127.0.0.1.|false|g' _site/admin/*.html || true
+          sed -i 's|window.location.hostname === .localhost. || window.location.hostname === .127.0.0.1.|false|g' _site/*.html || true
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
